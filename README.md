@@ -1,4 +1,81 @@
 PaperFoldMenuController
 =======================
 
-A navigation menu on the left of the screen using on PaperFold 
+PaperFoldMenuController is a UITabBarController replacement, but displays the view controllers in a table view on the left side of the screen. This table view is shown/hidden using [PaperFold-for-iOS](https://github.com/honcheng/PaperFold-for-iOS). Selecting from the menu on the left changes the view controller on the right. PaperFoldMenuController uses view controller containment. 
+
+
+<img src="https://github.com/honcheng/PaperFoldMenuController/raw/master/Screenshots/demo.png"/>
+
+
+Usage
+-----
+
+#PaperFoldMenuController
+
+##initWithMenuWidth:
+Initialize PaperFoldMenuController with the menu table view width
+
+	- (id)initWithMenuWidth:(float)menuWidth
+	
+####Parameters
+#####menuWidth
+This value specifies the width of the table view in the left menu
+
+##setViewControllers:
+Sets the root view controllers. Title for each view controllers appears in the menu table view
+
+	- (void)setViewControllers:(NSMutableArray *)viewControllers
+
+####Parameters
+#####viewControllers
+The array of custom view controllers to display on screen. The title of each view controllers are shown in the menu table view on the left. 
+
+##setSelectedIndex:
+Sets the current root view controller in contentView by index
+
+	- (void)setSelectedIndex:(NSUInteger)selectedIndex
+	
+####Parameters
+#####selectedIndex
+An integer value which is the index of the root  view controller in the viewControllers array.
+
+
+#PaperFoldMenuControllerDelegate
+
+##paperFoldMenuController:shouldSelectViewController:
+Ask the delegate whether the specified view controller should be made active
+
+	- (BOOL)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController shouldSelectViewController:(UIViewController *)viewController
+
+####Parameters
+#####paperFoldMenuController
+The paperfold menu controller containing the viewController.
+#####viewController
+The view controller selected in the menu
+#####Discussion
+The paperfold menu controller calls this method in response to the user tapping on the left menu. You can use this method to dynamically decide whether the view controller should be made active.
+
+##paperFoldMenuController:didSelectViewController:
+
+	- (void)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController didSelectViewController:(UIViewController *)viewController
+
+####Parameters
+#####paperFoldMenuController
+The paperfold menu controller containing the viewController.
+#####viewController
+The view controller selected in the menu
+#####Discussion
+The paperfold menu controller calls this method in response to the user tapping the left menu, after the viewController is made active.
+
+Requirements
+---
+
+This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
+XCode 4.4 is required for auto-synthesis.
+iOS 5.0 and above is required because the project uses view controller containment.
+
+Contact
+------
+
+[twitter.com/honcheng](http://twitter.com/honcheng)
+[honcheng.com](http://honcheng.com)

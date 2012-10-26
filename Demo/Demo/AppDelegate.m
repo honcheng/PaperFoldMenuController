@@ -39,7 +39,6 @@
     [viewControllers addObject:thirdNavController];
     
     [_menuController setViewControllers:viewControllers];
-    [_menuController setSelectedIndex:1];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -48,7 +47,7 @@
 
 - (void)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController didSelectViewController:(UIViewController *)viewController
 {
-    NSLog(@"%@", viewController);
+
 }
 
 @end
