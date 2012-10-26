@@ -96,6 +96,8 @@
 {
     _selectedIndex = selectedIndex;
     
+    [self.menuTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
     UIView *lastView = (UIView*)[self.contentView viewWithTag:TAG_CURRENT_VIEWCONTROLLER];
     if (lastView)
     {
@@ -115,6 +117,12 @@
     [self addChildViewController:_selectedViewController];
     [self.contentView addSubview:_selectedViewController.view];
     [_selectedViewController didMoveToParentViewController:self];
+    
+    if (self.paperFoldView.state!=PaperFoldStateLeftUnfolded)
+    {
+        [self reloadMenu];
+    }
+    
 }
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
@@ -160,7 +168,20 @@
 {
     if (tableView==self.menuTableView)
     {
-        [self setSelectedIndex:indexPath.row];
+        BOOL shouldSelect = YES;
+        if ([self.delegate respondsToSelector:@selector(paperFoldMenuController:shouldSelectViewController:)])
+        {
+            shouldSelect = [self.delegate paperFoldMenuController:self shouldSelectViewController:self.viewControllers[indexPath.row]];
+        }
+        if (shouldSelect)
+        {
+            [self setSelectedIndex:indexPath.row];
+            if ([self.delegate respondsToSelector:@selector(paperFoldMenuController:didSelectViewController:)])
+            {
+                [self.delegate paperFoldMenuController:self didSelectViewController:_selectedViewController];
+            }
+        }
+        
     }
 }
 

@@ -31,27 +31,12 @@
  *
  */
 
-#import <UIKit/UIKit.h>
-#import "PaperFoldView.h"
-#import "PaperFoldMenuControllerDelegate.h"
+#import <Foundation/Foundation.h>
 
-@interface PaperFoldMenuController : UIViewController <PaperFoldViewDelegate, UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) PaperFoldView *paperFoldView;
-@property (nonatomic, strong) NSMutableArray *viewControllers;
-@property (nonatomic, strong) UITableView *menuTableView;
-@property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, assign) id<PaperFoldMenuControllerDelegate> delegate;
-/**
- * Set and return the current view controller;
- */
-@property (nonatomic, strong) UIViewController *selectedViewController;
-/**
- * Set and return the index of the current view controller
- */
-@property (nonatomic, assign) NSUInteger selectedIndex;
-/**
- * This method initialize the view controller with 
- * the width of the menu table view on the left
- */
-- (id)initWithMenuWidth:(float)menuWidth;
+@class PaperFoldMenuController;
+
+@protocol PaperFoldMenuControllerDelegate <NSObject>
+@optional
+- (BOOL)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController shouldSelectViewController:(UIViewController *)viewController;
+- (void)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController didSelectViewController:(UIViewController *)viewController;
 @end

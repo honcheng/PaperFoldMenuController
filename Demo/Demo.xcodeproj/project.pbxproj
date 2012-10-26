@@ -82,6 +82,7 @@
 		F8938534163AD6FA0085C3BB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F893853A163AD8680085C3BB /* DemoMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMenuController.h; sourceTree = "<group>"; };
 		F893853B163AD8680085C3BB /* DemoMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoMenuController.m; sourceTree = "<group>"; };
+		F8938557163ADFE40085C3BB /* PaperFoldMenuControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaperFoldMenuControllerDelegate.h; path = ../PaperFoldMenuController/PaperFoldMenuControllerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +167,7 @@
 				F89384EB163AD49E0085C3BB /* PaperFold */,
 				F89384C4163AD3BC0085C3BB /* PaperFoldMenuController.h */,
 				F89384C5163AD3BC0085C3BB /* PaperFoldMenuController.m */,
+				F8938557163ADFE40085C3BB /* PaperFoldMenuControllerDelegate.h */,
 			);
 			name = PaperFoldMenuController;
 			sourceTree = "<group>";

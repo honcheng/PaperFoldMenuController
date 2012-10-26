@@ -18,6 +18,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     _menuController = [[DemoMenuController alloc] initWithMenuWidth:250.0];
+    [_menuController setDelegate:self];
     [self.window setRootViewController:_menuController];
     
     NSMutableArray *viewControllers = [NSMutableArray array];
@@ -38,10 +39,16 @@
     [viewControllers addObject:thirdNavController];
     
     [_menuController setViewControllers:viewControllers];
+    [_menuController setSelectedIndex:1];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController didSelectViewController:(UIViewController *)viewController
+{
+    NSLog(@"%@", viewController);
 }
 
 @end
