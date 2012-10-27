@@ -99,7 +99,9 @@ Requirements
 ---
 
 This project uses ARC. If you are not using ARC in your project, add '-fobjc-arc' as a compiler flag for all the files in this project.
+
 XCode 4.4 is required for auto-synthesis.
+
 iOS 5.0 and above is required because the project uses view controller containment.
 
 Contact
@@ -107,3 +109,5 @@ Contact
 
 [twitter.com/honcheng](http://twitter.com/honcheng)
 [honcheng.com](http://honcheng.com)
+
+![](http://www.cocoacontrols.com/analytics/honcheng/paperfoldmenucontroller.png)
