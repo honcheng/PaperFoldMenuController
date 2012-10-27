@@ -7,9 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "FirstViewController.h"
-#import "SecondViewController.h"
-#import "ThirdViewController.h"
+#import "DemoMenuController.h"
 
 @implementation AppDelegate
 
@@ -17,26 +15,20 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    _menuController = [[DemoMenuController alloc] initWithMenuWidth:250.0];
+    _menuController = [[DemoMenuController alloc] initWithMenuWidth:250.0 numberOfFolds:3];
     [_menuController setDelegate:self];
     [self.window setRootViewController:_menuController];
     
     NSMutableArray *viewControllers = [NSMutableArray array];
     
-    FirstViewController *firstViewController = [[FirstViewController alloc] init];
-    [firstViewController setTitle:@"First View Controller"];
-    UINavigationController *firstNavController = [[UINavigationController alloc] initWithRootViewController:firstViewController];
-    [viewControllers addObject:firstNavController];
+    for (int i=0; i<8; i++)
+    {
+        DemoMenuController *rootViewController = [[DemoMenuController alloc] init];
+        [rootViewController setTitle:[NSString stringWithFormat:@"Root VC %i", i+1]];
+        UINavigationController *rootNavController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+        [viewControllers addObject:rootNavController];
+    }
     
-    SecondViewController *secondViewController = [[SecondViewController alloc] init];
-    [secondViewController setTitle:@"Second View Controller"];
-    UINavigationController *secondNavController = [[UINavigationController alloc] initWithRootViewController:secondViewController];
-    [viewControllers addObject:secondNavController];
-    
-    ThirdViewController *thirdViewController = [[ThirdViewController alloc] init];
-    [thirdViewController setTitle:@"Third View Controller"];
-    UINavigationController *thirdNavController = [[UINavigationController alloc] initWithRootViewController:thirdViewController];
-    [viewControllers addObject:thirdNavController];
     
     [_menuController setViewControllers:viewControllers];
     

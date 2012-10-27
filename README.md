@@ -12,14 +12,16 @@ Usage
 
 #PaperFoldMenuController
 
-##initWithMenuWidth:
-Initialize PaperFoldMenuController with the menu table view width
+##initWithMenuWidth:numberOfFolds
+Initialize PaperFoldMenuController
 
-	- (id)initWithMenuWidth:(float)menuWidth
+	- (id)initWithMenuWidth:(float)menuWidth numberOfFolds:(int)numberOfFolds
 	
 ####Parameters
 #####menuWidth
 This value specifies the width of the table view in the left menu
+#####numberOfFolds
+This value specifies the number of folds in the menu table view
 
 ##setViewControllers:
 Sets the root view controllers. Title for each view controllers appears in the menu table view
@@ -39,6 +41,18 @@ Sets the current root view controller in contentView by index
 #####selectedIndex
 An integer value which is the index of the root  view controller in the viewControllers array.
 
+##showMenu:animated:
+Show or hide the menu table view. 
+
+	- (void)showMenu:(BOOL)show animated:(BOOL)animated
+
+####Parameters
+#####show
+A boolean value to indicate if the menu should be shown or hidden
+#####animated
+A boolean value to indicate if the folding/unfolding should be animated
+#####Discussion
+This method is automatically called with show=YES and animated=YES when a cell in menu table view is selected. 
 
 #PaperFoldMenuControllerDelegate
 
@@ -56,6 +70,7 @@ The view controller selected in the menu
 The paperfold menu controller calls this method in response to the user tapping on the left menu. You can use this method to dynamically decide whether the view controller should be made active.
 
 ##paperFoldMenuController:didSelectViewController:
+The paperfold menu controller calls this method in response to the user tapping the left menu, after the viewController is made active.
 
 	- (void)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController didSelectViewController:(UIViewController *)viewController
 
@@ -64,9 +79,20 @@ The paperfold menu controller calls this method in response to the user tapping 
 The paperfold menu controller containing the viewController.
 #####viewController
 The view controller selected in the menu
-#####Discussion
-The paperfold menu controller calls this method in response to the user tapping the left menu, after the viewController is made active.
 
+
+##paperFoldMenuController:shouldFoldMenuToRevealViewController:
+Ask the delegate if the menu table view should be folded to reveal the selected view controller
+
+	- (BOOL)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController shouldFoldMenuToRevealViewController:(UIViewController *)viewController;
+
+####Parameters
+#####paperFoldMenuController
+The paperfold menu controller containing the viewController.
+#####viewController
+The view controller selected in the menu
+
+	
 Requirements
 ---
 

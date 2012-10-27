@@ -48,7 +48,7 @@
 
 @implementation PaperFoldMenuController
 
-- (id)initWithMenuWidth:(float)menuWidth
+- (id)initWithMenuWidth:(float)menuWidth numberOfFolds:(int)numberOfFolds
 {
     self = [super init];
     if (self)
@@ -64,7 +64,7 @@
         [_paperFoldView setCenterContentView:_contentView];
         
         _menuTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, menuWidth, [self.view bounds].size.height)];
-        [_paperFoldView setLeftFoldContentView:_menuTableView foldCount:3 pullFactor:0.9];
+        [_paperFoldView setLeftFoldContentView:_menuTableView foldCount:numberOfFolds pullFactor:0.9];
         [_menuTableView setDelegate:self];
         [_menuTableView setDataSource:self];
         
@@ -192,8 +192,29 @@
             {
                 [self.delegate paperFoldMenuController:self didSelectViewController:_selectedViewController];
             }
+            
+            BOOL shouldFold = YES;
+            if ([self.delegate respondsToSelector:@selector(paperFoldMenuController:shouldFoldMenuToRevealViewController:)])
+            {
+                shouldFold = [self.delegate paperFoldMenuController:self shouldFoldMenuToRevealViewController:_selectedViewController];
+            }
+            if (shouldFold)
+            {
+                [self showMenu:NO animated:YES];
+            }
         }
-        
+    }
+}
+
+- (void)showMenu:(BOOL)show animated:(BOOL)animated
+{
+    if (show)
+    {
+        [self.paperFoldView setPaperFoldState:PaperFoldStateLeftUnfolded animated:animated];
+    }
+    else
+    {
+        [self.paperFoldView setPaperFoldState:PaperFoldStateDefault animated:animated];
     }
 }
 

@@ -38,5 +38,6 @@
 @protocol PaperFoldMenuControllerDelegate <NSObject>
 @optional
 - (BOOL)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController shouldSelectViewController:(UIViewController *)viewController;
+- (BOOL)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController shouldFoldMenuToRevealViewController:(UIViewController *)viewController;
 - (void)paperFoldMenuController:(PaperFoldMenuController *)paperFoldMenuController didSelectViewController:(UIViewController *)viewController;
 @end

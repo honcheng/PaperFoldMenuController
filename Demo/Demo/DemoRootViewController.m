@@ -1,18 +1,18 @@
 //
-//  FirstViewController.m
+//  DemoRootViewController.m
 //  Demo
 //
-//  Created by honcheng on 26/10/12.
+//  Created by honcheng on 27/10/12.
 //  Copyright (c) 2012 Hon Cheng Muh. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "DemoRootViewController.h"
 
-@interface FirstViewController ()
+@interface DemoRootViewController ()
 
 @end
 
-@implementation FirstViewController
+@implementation DemoRootViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

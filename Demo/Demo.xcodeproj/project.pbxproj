@@ -29,11 +29,11 @@
 		F893850B163AD49E0085C3BB /* ShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F89384FD163AD49E0085C3BB /* ShadowView.m */; };
 		F893850C163AD49E0085C3BB /* TouchThroughUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = F89384FF163AD49E0085C3BB /* TouchThroughUIView.m */; };
 		F893850D163AD49E0085C3BB /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = F8938501163AD49E0085C3BB /* UIView+Screenshot.m */; };
-		F8938513163AD5CE0085C3BB /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8938512163AD5CE0085C3BB /* FirstViewController.m */; };
-		F8938516163AD5D70085C3BB /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8938515163AD5D70085C3BB /* SecondViewController.m */; };
-		F8938519163AD5E20085C3BB /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8938518163AD5E10085C3BB /* ThirdViewController.m */; };
 		F8938535163AD6FA0085C3BB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8938534163AD6FA0085C3BB /* QuartzCore.framework */; };
 		F893853C163AD8680085C3BB /* DemoMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = F893853B163AD8680085C3BB /* DemoMenuController.m */; };
+		F8C000CF163B67DF00654C1E /* cellBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8C000CE163B67DF00654C1E /* cellBg@2x.png */; };
+		F8C000D3163B691E00654C1E /* cellBgSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F8C000D2163B691E00654C1E /* cellBgSelected@2x.png */; };
+		F8C000D6163B6B7300654C1E /* DemoRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C000D5163B6B7300654C1E /* DemoRootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,16 +73,14 @@
 		F89384FF163AD49E0085C3BB /* TouchThroughUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchThroughUIView.m; sourceTree = "<group>"; };
 		F8938500163AD49E0085C3BB /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
 		F8938501163AD49E0085C3BB /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
-		F8938511163AD5CE0085C3BB /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		F8938512163AD5CE0085C3BB /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		F8938514163AD5D70085C3BB /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		F8938515163AD5D70085C3BB /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		F8938517163AD5E10085C3BB /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
-		F8938518163AD5E10085C3BB /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		F8938534163AD6FA0085C3BB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F893853A163AD8680085C3BB /* DemoMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMenuController.h; sourceTree = "<group>"; };
 		F893853B163AD8680085C3BB /* DemoMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoMenuController.m; sourceTree = "<group>"; };
 		F8938557163ADFE40085C3BB /* PaperFoldMenuControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaperFoldMenuControllerDelegate.h; path = ../PaperFoldMenuController/PaperFoldMenuControllerDelegate.h; sourceTree = "<group>"; };
+		F8C000CE163B67DF00654C1E /* cellBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellBg@2x.png"; sourceTree = "<group>"; };
+		F8C000D2163B691E00654C1E /* cellBgSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellBgSelected@2x.png"; sourceTree = "<group>"; };
+		F8C000D4163B6B7300654C1E /* DemoRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoRootViewController.h; sourceTree = "<group>"; };
+		F8C000D5163B6B7300654C1E /* DemoRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoRootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,12 +134,8 @@
 				F8938467163AD2BE0085C3BB /* AppDelegate.m */,
 				F893853A163AD8680085C3BB /* DemoMenuController.h */,
 				F893853B163AD8680085C3BB /* DemoMenuController.m */,
-				F8938511163AD5CE0085C3BB /* FirstViewController.h */,
-				F8938512163AD5CE0085C3BB /* FirstViewController.m */,
-				F8938514163AD5D70085C3BB /* SecondViewController.h */,
-				F8938515163AD5D70085C3BB /* SecondViewController.m */,
-				F8938517163AD5E10085C3BB /* ThirdViewController.h */,
-				F8938518163AD5E10085C3BB /* ThirdViewController.m */,
+				F8C000D4163B6B7300654C1E /* DemoRootViewController.h */,
+				F8C000D5163B6B7300654C1E /* DemoRootViewController.m */,
 				F893845E163AD2BE0085C3BB /* Supporting Files */,
 			);
 			path = Demo;
@@ -150,6 +144,8 @@
 		F893845E163AD2BE0085C3BB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F8C000CE163B67DF00654C1E /* cellBg@2x.png */,
+				F8C000D2163B691E00654C1E /* cellBgSelected@2x.png */,
 				F893845F163AD2BE0085C3BB /* Demo-Info.plist */,
 				F8938460163AD2BE0085C3BB /* InfoPlist.strings */,
 				F8938463163AD2BE0085C3BB /* main.m */,
@@ -267,6 +263,8 @@
 				F8938506163AD49E0085C3BB /* PaperFoldResources.bundle in Resources */,
 				F8938509163AD49E0085C3BB /* swipe_guide.psd in Resources */,
 				F893850A163AD49E0085C3BB /* swipe_guide2.psd in Resources */,
+				F8C000CF163B67DF00654C1E /* cellBg@2x.png in Resources */,
+				F8C000D3163B691E00654C1E /* cellBgSelected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,10 +287,8 @@
 				F893850B163AD49E0085C3BB /* ShadowView.m in Sources */,
 				F893850C163AD49E0085C3BB /* TouchThroughUIView.m in Sources */,
 				F893850D163AD49E0085C3BB /* UIView+Screenshot.m in Sources */,
-				F8938513163AD5CE0085C3BB /* FirstViewController.m in Sources */,
-				F8938516163AD5D70085C3BB /* SecondViewController.m in Sources */,
-				F8938519163AD5E20085C3BB /* ThirdViewController.m in Sources */,
 				F893853C163AD8680085C3BB /* DemoMenuController.m in Sources */,
+				F8C000D6163B6B7300654C1E /* DemoRootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

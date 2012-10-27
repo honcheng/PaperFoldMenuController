@@ -14,25 +14,58 @@
 
 @implementation DemoMenuController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithMenuWidth:(float)menuWidth numberOfFolds:(int)numberOfFolds
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    self = [super initWithMenuWidth:menuWidth numberOfFolds:numberOfFolds];
+    if (self)
+    {
+        UIView *tableBgView = [[UIView alloc] init];
+        [tableBgView setBackgroundColor:[UIColor colorWithRed:0.170 green:0.166 blue:0.175 alpha:1.000]];
+        [self.menuTableView setBackgroundView:tableBgView];
+        [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     }
     return self;
 }
 
-- (void)viewDidLoad
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    return 50;
 }
 
-- (void)didReceiveMemoryWarning
+/**
+ * Override the method to customize cells
+ */
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if (tableView==self.menuTableView)
+    {
+        static NSString *identifier = @"identifier";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+            [[cell textLabel] setTextColor:[UIColor whiteColor]];
+            [[cell textLabel] setHighlightedTextColor:[UIColor blackColor]];
+            
+            UIImageView *bgView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"cellBg.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:20]];
+            [cell setBackgroundView:bgView];
+            UIImageView *sBgView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"cellBgSelected.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:20]];
+            [cell setSelectedBackgroundView:sBgView];
+        
+        }
+        
+        UIViewController *viewController = self.viewControllers[indexPath.row];
+        [cell.textLabel setText:viewController.title];
+        
+        if (indexPath.row==self.selectedIndex)
+        {
+            [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        }
+        
+        return cell;
+    }
+    else return nil;
 }
+
 
 @end

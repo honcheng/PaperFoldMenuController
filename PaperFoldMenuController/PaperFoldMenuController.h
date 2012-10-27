@@ -54,5 +54,11 @@
  * This method initialize the view controller with 
  * the width of the menu table view on the left
  */
-- (id)initWithMenuWidth:(float)menuWidth;
+- (id)initWithMenuWidth:(float)menuWidth numberOfFolds:(int)numberOfFolds;
+/**
+ * This method fold/unfolds to hide/reveal the menuTableView
+ * @param show A boolean value to indicate if the menu should be shown or hidden
+ * @param animated A boolean value to indicate if the folding/unfolding should be animated
+ */
+- (void)showMenu:(BOOL)show animated:(BOOL)animated;
 @end
