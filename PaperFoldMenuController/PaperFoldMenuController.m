@@ -35,6 +35,10 @@
 
 @interface PaperFoldMenuController ()
 /**
+ * A UIView with shadow at joint between the menu and content view
+ */
+@property (nonatomic, strong) ShadowView *menuTableViewSideShadowView;
+/**
  * This method reloads the menu on the left
  * and refresh the screenshot of the menu used in 
  * PaperFold
@@ -63,6 +67,14 @@
         [_paperFoldView setLeftFoldContentView:_menuTableView foldCount:3 pullFactor:0.9];
         [_menuTableView setDelegate:self];
         [_menuTableView setDataSource:self];
+        
+        _menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontal];
+        [_menuTableViewSideShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.6]]];
+        /**
+         * added to the leftFoldView instead of leftFoldView.contentView bec
+         * so that the shadow does not appear while folding
+         */
+        [_paperFoldView.leftFoldView addSubview:_menuTableViewSideShadowView];
         
     }
     return self;

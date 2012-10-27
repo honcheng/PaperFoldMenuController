@@ -34,6 +34,7 @@
 #import <UIKit/UIKit.h>
 #import "PaperFoldView.h"
 #import "PaperFoldMenuControllerDelegate.h"
+#import "ShadowView.h"
 
 @interface PaperFoldMenuController : UIViewController <PaperFoldViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) PaperFoldView *paperFoldView;
