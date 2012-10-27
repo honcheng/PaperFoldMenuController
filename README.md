@@ -7,6 +7,8 @@ PaperFoldMenuController is a UITabBarController replacement, but displays the vi
 <img src="https://github.com/honcheng/PaperFoldMenuController/raw/master/Screenshots/demo.png"/>
 
 
+<img src="https://github.com/honcheng/PaperFoldMenuController/raw/master/Screenshots/demo.gif"/>
+
 Usage
 -----
 
