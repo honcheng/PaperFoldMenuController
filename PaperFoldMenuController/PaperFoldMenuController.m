@@ -97,9 +97,9 @@
 - (void)reloadMenu
 {
     [self.menuTableView reloadData];
-    [self.paperFoldView.leftFoldView.contentView setHidden:NO];
+    [self.paperFoldView.leftFoldView.contentViewHolder setHidden:NO];
     [self.paperFoldView.leftFoldView drawScreenshotOnFolds];
-    [self.paperFoldView.leftFoldView.contentView setHidden:YES];
+    [self.paperFoldView.leftFoldView.contentViewHolder setHidden:YES];
 }
 
 #define TAG_CURRENT_VIEWCONTROLLER 1212
