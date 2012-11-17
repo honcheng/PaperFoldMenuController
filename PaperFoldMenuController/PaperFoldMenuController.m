@@ -37,7 +37,10 @@
 /**
  * A UIView with shadow at joint between the menu and content view
  */
-@property (nonatomic, strong) ShadowView *menuTableViewSideShadowView;
+@property (nonatomic, weak) ShadowView *menuTableViewSideShadowView;
+@property (nonatomic, assign) float menuWidth;
+@property (nonatomic, assign) int numberOfFolds;
+@property (nonatomic, strong) NSBlockOperation *viewDidLoadBlockOperation;
 /**
  * This method reloads the menu on the left
  * and refresh the screenshot of the menu used in 
@@ -48,40 +51,183 @@
 
 @implementation PaperFoldMenuController
 
+- (NSBlockOperation *)viewDidLoadBlockOperation {
+    if (_viewDidLoadBlockOperation == nil) {
+        self.viewDidLoadBlockOperation = [[NSBlockOperation alloc] init];
+    }
+    return _viewDidLoadBlockOperation;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfSelectedViewController
+{
+    return NO;
+}
+
++ (NSSet *)keyPathsForValuesAffectingSelectedViewController
+{
+    return [NSSet setWithObjects:@"selectedIndex", nil];
+}
+
+- (UIViewController *)selectedViewController
+{
+    if (self.selectedIndex == NSNotFound)
+    {
+        return nil;
+    }
+    else
+    {
+        return self.viewControllers[self.selectedIndex];
+    }
+}
+
+- (void)setSelectedViewController:(UIViewController *)theSelectedViewController
+{
+    NSUInteger theSelectedIndex = [self.viewControllers indexOfObject:theSelectedViewController];
+    
+    if (theSelectedIndex == NSNotFound)
+    {
+        [NSException raise:NSInternalInconsistencyException format:@"Could not selected view controller because it is not registered.\n%@", theSelectedViewController];
+        return;
+    }
+    
+    self.selectedIndex = theSelectedIndex;
+}
+
++ (BOOL)automaticallyNotifiesObserversOfSelectedIndex {
+    return NO;
+}
+
+- (void)setSelectedIndex:(NSUInteger)theSelectedIndex
+{
+    if (!self.isViewLoaded)
+    {
+        __weak typeof(self) theWeakSelf = self;
+        [self.viewDidLoadBlockOperation addExecutionBlock:^{
+            __strong typeof(self) theStrongSelf = theWeakSelf;
+            if (theStrongSelf == nil) {
+                return;
+            }
+            // This is ran on a seperate thread, which is NSBlockOperation addExecutionBlock: behavior.
+            // It shouldn't cause any issue though but noted here just in case anyone face any issue.
+            // This also means observing selectedIndex or selectedViewController are not gaurentee to be
+            // running on main thread.
+            theStrongSelf.selectedIndex = theSelectedIndex;
+        }];
+    }
+    else
+    {
+        NSUInteger theOldSelectedIndex = self.selectedIndex;
+        NSUInteger theNewSelectedIndex = theSelectedIndex;
+        
+        if (theOldSelectedIndex == theNewSelectedIndex) {
+            return;
+        }
+        
+        [self willChangeValueForKey:@"selectedIndex"];
+        
+        if (theOldSelectedIndex != NSNotFound)
+        {
+            UIViewController *theOldViewController = self.viewControllers[theOldSelectedIndex];
+            [theOldViewController willMoveToParentViewController:nil];
+            [theOldViewController.view removeFromSuperview];
+            [theOldViewController removeFromParentViewController];
+            
+            [self.menuTableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:theOldSelectedIndex inSection:0] animated:YES];
+        }
+        
+        _selectedIndex = theNewSelectedIndex;
+        
+        if (theNewSelectedIndex != NSNotFound)
+        {
+            UIViewController *theNewViewController = self.viewControllers[theNewSelectedIndex];
+            theNewViewController.view.frame = self.contentView.bounds;
+            [self addChildViewController:theNewViewController];
+            [self.contentView addSubview:theNewViewController.view];
+            [theNewViewController didMoveToParentViewController:self];
+            
+            [self.menuTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:theNewSelectedIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+        
+        [self didChangeValueForKey:@"selectedIndex"];
+        
+        if (self.paperFoldView.state != PaperFoldStateLeftUnfolded)
+        {
+            [self reloadMenu];
+        }
+    }
+}
+
+- (void)commonInit {
+    _selectedIndex = NSNotFound;
+}
+
 - (id)initWithMenuWidth:(float)menuWidth numberOfFolds:(int)numberOfFolds
 {
-    self = [super init];
+    self = [self initWithNibName:nil bundle:nil];
     if (self)
     {
-        _paperFoldView = [[PaperFoldView alloc] initWithFrame:CGRectMake(0, 0, [self.view bounds].size.width, [self.view bounds].size.height)];
-        [_paperFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        [_paperFoldView setDelegate:self];
-        [_paperFoldView setUseOptimizedScreenshot:NO];
-        [self.view addSubview:_paperFoldView];
-        
-        _contentView = [[UIView alloc] initWithFrame:_paperFoldView.frame];
-        [_contentView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        [_paperFoldView setCenterContentView:_contentView];
-        
-        _menuTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, menuWidth, [self.view bounds].size.height)];
-        [_paperFoldView setLeftFoldContentView:_menuTableView foldCount:numberOfFolds pullFactor:0.9];
-        [_menuTableView setDelegate:self];
-        [_menuTableView setDataSource:self];
-        
-        _menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontal];
-        [_menuTableViewSideShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.6]]];
-        /**
-         * added to the leftFoldView instead of leftFoldView.contentView bec
-         * so that the shadow does not appear while folding
-         */
-        [_paperFoldView.leftFoldView addSubview:_menuTableViewSideShadowView];
-        
+        self.menuWidth = menuWidth;
+        self.numberOfFolds = numberOfFolds;
     }
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self)
+    {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    PaperFoldView *paperFoldView = [[PaperFoldView alloc] initWithFrame:CGRectMake(0, 0, [self.view bounds].size.width, [self.view bounds].size.height)];
+    [paperFoldView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [paperFoldView setDelegate:self];
+    [paperFoldView setUseOptimizedScreenshot:NO];
+    [self.view addSubview:paperFoldView];
+    self.paperFoldView = paperFoldView;
+    
+    UIView *contentView = [[UIView alloc] initWithFrame:_paperFoldView.frame];
+    [contentView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [self.paperFoldView setCenterContentView:contentView];
+    self.contentView = contentView;
+    
+    UITableView *menuTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.menuWidth, [self.view bounds].size.height)];
+    [self.paperFoldView setLeftFoldContentView:menuTableView foldCount:self.numberOfFolds pullFactor:0.9];
+    [menuTableView setDelegate:self];
+    [menuTableView setDataSource:self];
+    self.menuTableView = menuTableView;
+    
+    ShadowView *menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontal];
+    [menuTableViewSideShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.6]]];
+    /**
+     * added to the leftFoldView instead of leftFoldView.contentView bec
+     * so that the shadow does not appear while folding
+     */
+    [self.paperFoldView.leftFoldView addSubview:menuTableViewSideShadowView];
+    self.menuTableViewSideShadowView = menuTableViewSideShadowView;
+    
+    [self.viewDidLoadBlockOperation start];
+    self.viewDidLoadBlockOperation = nil;
+}
+
 - (void)setViewControllers:(NSMutableArray *)viewControllers
 {
+    self.selectedIndex = NSNotFound; // Forces any child view controller to be removed.
     _viewControllers = viewControllers;
     if ([_viewControllers count]>0) [self setSelectedIndex:0];
     [self reloadMenu];
@@ -100,48 +246,6 @@
     [self.paperFoldView.leftFoldView.contentViewHolder setHidden:NO];
     [self.paperFoldView.leftFoldView drawScreenshotOnFolds];
     [self.paperFoldView.leftFoldView.contentViewHolder setHidden:YES];
-}
-
-#define TAG_CURRENT_VIEWCONTROLLER 1212
-
-- (void)setSelectedIndex:(NSUInteger)selectedIndex
-{
-    _selectedIndex = selectedIndex;
-    
-    [self.menuTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-    
-    UIView *lastView = (UIView*)[self.contentView viewWithTag:TAG_CURRENT_VIEWCONTROLLER];
-    if (lastView)
-    {
-        UIViewController *lastViewController = nil;
-        for (UIViewController *viewController in self.viewControllers)
-        {
-            if (viewController.view == lastView) lastViewController = viewController;
-        }
-        [lastViewController willMoveToParentViewController:nil];
-        [lastViewController.view removeFromSuperview];
-        [lastViewController removeFromParentViewController];
-    }
-    
-    _selectedViewController = self.viewControllers[_selectedIndex];
-    [_selectedViewController.view setFrame:self.contentView.frame];
-    [_selectedViewController.view setTag:TAG_CURRENT_VIEWCONTROLLER];
-    [self addChildViewController:_selectedViewController];
-    [self.contentView addSubview:_selectedViewController.view];
-    [_selectedViewController didMoveToParentViewController:self];
-    
-    if (self.paperFoldView.state!=PaperFoldStateLeftUnfolded)
-    {
-        [self reloadMenu];
-    }
-    
-}
-
-- (void)setSelectedViewController:(UIViewController *)selectedViewController
-{
-    _selectedViewController = selectedViewController;
-    int index = [self.viewControllers indexOfObject:_selectedViewController];
-    [self setSelectedIndex:index];
 }
 
 #pragma mark table view delegates and datasource
@@ -190,13 +294,13 @@
             [self setSelectedIndex:indexPath.row];
             if ([self.delegate respondsToSelector:@selector(paperFoldMenuController:didSelectViewController:)])
             {
-                [self.delegate paperFoldMenuController:self didSelectViewController:_selectedViewController];
+                [self.delegate paperFoldMenuController:self didSelectViewController:self.selectedViewController];
             }
             
             BOOL shouldFold = YES;
             if ([self.delegate respondsToSelector:@selector(paperFoldMenuController:shouldFoldMenuToRevealViewController:)])
             {
-                shouldFold = [self.delegate paperFoldMenuController:self shouldFoldMenuToRevealViewController:_selectedViewController];
+                shouldFold = [self.delegate paperFoldMenuController:self shouldFoldMenuToRevealViewController:self.selectedViewController];
             }
             if (shouldFold)
             {

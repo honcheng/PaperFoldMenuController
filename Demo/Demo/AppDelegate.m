@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DemoMenuController.h"
+#import "DemoRootViewController.h"
 
 @implementation AppDelegate
 
@@ -23,7 +24,7 @@
     
     for (int i=0; i<8; i++)
     {
-        DemoMenuController *rootViewController = [[DemoMenuController alloc] init];
+        DemoRootViewController *rootViewController = [[DemoRootViewController alloc] init];
         [rootViewController setTitle:[NSString stringWithFormat:@"Root VC %i", i+1]];
         UINavigationController *rootNavController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
         [viewControllers addObject:rootNavController];

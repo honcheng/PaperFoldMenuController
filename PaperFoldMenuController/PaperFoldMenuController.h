@@ -37,11 +37,11 @@
 #import "ShadowView.h"
 
 @interface PaperFoldMenuController : UIViewController <PaperFoldViewDelegate, UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) PaperFoldView *paperFoldView;
+@property (nonatomic, weak) PaperFoldView *paperFoldView;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
-@property (nonatomic, strong) UITableView *menuTableView;
-@property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, assign) id<PaperFoldMenuControllerDelegate> delegate;
+@property (nonatomic, weak) UITableView *menuTableView;
+@property (nonatomic, weak) UIView *contentView;
+@property (nonatomic, weak) id<PaperFoldMenuControllerDelegate> delegate;
 /**
  * Set and return the current view controller;
  */
@@ -50,6 +50,8 @@
  * Set and return the index of the current view controller
  */
 @property (nonatomic, assign) NSUInteger selectedIndex;
+@property (nonatomic, assign, readonly) float menuWidth;
+@property (nonatomic, assign, readonly) int numberOfFolds;
 /**
  * This method initialize the view controller with 
  * the width of the menu table view on the left

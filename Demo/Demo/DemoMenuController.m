@@ -19,12 +19,19 @@
     self = [super initWithMenuWidth:menuWidth numberOfFolds:numberOfFolds];
     if (self)
     {
-        UIView *tableBgView = [[UIView alloc] init];
-        [tableBgView setBackgroundColor:[UIColor colorWithRed:0.170 green:0.166 blue:0.175 alpha:1.000]];
-        [self.menuTableView setBackgroundView:tableBgView];
-        [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     }
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    UIView *tableBgView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [tableBgView setBackgroundColor:[UIColor colorWithRed:0.170 green:0.166 blue:0.175 alpha:1.000]];
+    [self.menuTableView setBackgroundView:tableBgView];
+    [self.menuTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    [self performSelector:@selector(reloadMenu)];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -46,6 +53,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             [[cell textLabel] setTextColor:[UIColor whiteColor]];
             [[cell textLabel] setHighlightedTextColor:[UIColor blackColor]];
+            [[cell textLabel] setBackgroundColor:[UIColor clearColor]];
             
             UIImageView *bgView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"cellBg.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:20]];
             [cell setBackgroundView:bgView];
