@@ -172,8 +172,8 @@
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nil bundle:nil];
+- (id)initWithNibName:(NSString *)theNibNameOrNil bundle:(NSBundle *)theNibBundleOrNil {
+    self = [super initWithNibName:theNibNameOrNil bundle:theNibBundleOrNil];
     if (self)
     {
         [self commonInit];
