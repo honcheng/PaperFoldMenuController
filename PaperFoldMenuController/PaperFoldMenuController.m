@@ -212,7 +212,7 @@
     [menuTableView setDataSource:self];
     self.menuTableView = menuTableView;
     
-    ShadowView *menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontal];
+    ShadowView *menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontalLeftToRight];
     [menuTableViewSideShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.6]]];
     /**
      * added to the leftFoldView instead of leftFoldView.contentView bec
