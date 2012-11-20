@@ -172,8 +172,8 @@
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nil bundle:nil];
+- (id)initWithNibName:(NSString *)theNibNameOrNil bundle:(NSBundle *)theNibBundleOrNil {
+    self = [super initWithNibName:theNibNameOrNil bundle:theNibBundleOrNil];
     if (self)
     {
         [self commonInit];
@@ -210,6 +210,7 @@
     [self.paperFoldView setLeftFoldContentView:menuTableView foldCount:self.numberOfFolds pullFactor:0.9];
     [menuTableView setDelegate:self];
     [menuTableView setDataSource:self];
+    menuTableView.scrollsToTop = !(self.paperFoldView.state == PaperFoldStateDefault);
     self.menuTableView = menuTableView;
     
     ShadowView *menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontalLeftToRight];
@@ -320,6 +321,13 @@
     {
         [self.paperFoldView setPaperFoldState:PaperFoldStateDefault animated:animated];
     }
+}
+
+#pragma mark - PaperFoldViewDelegate methods
+
+- (void)paperFoldView:(id)thePaperFoldView didFoldAutomatically:(BOOL)theAutomated toState:(PaperFoldState)thePaperFoldState {
+    BOOL thePaperFoldViewDidFold = (thePaperFoldState == PaperFoldStateDefault);
+    self.menuTableView.scrollsToTop = !thePaperFoldViewDidFold;
 }
 
 @end
