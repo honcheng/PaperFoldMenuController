@@ -323,6 +323,11 @@
     }
 }
 
+- (void)setOnlyAllowEdgeDrag:(BOOL)onlyAllowEdgeDrag
+{
+    [self.paperFoldView setEnableHorizontalEdgeDragging:onlyAllowEdgeDrag];
+}
+
 #pragma mark - PaperFoldViewDelegate methods
 
 - (void)paperFoldView:(id)thePaperFoldView didFoldAutomatically:(BOOL)theAutomated toState:(PaperFoldState)thePaperFoldState {

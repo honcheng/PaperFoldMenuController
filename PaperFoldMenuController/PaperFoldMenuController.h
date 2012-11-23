@@ -42,6 +42,7 @@
 @property (nonatomic, weak) UITableView *menuTableView;
 @property (nonatomic, weak) UIView *contentView;
 @property (nonatomic, weak) id<PaperFoldMenuControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL onlyAllowEdgeDrag;
 /**
  * Set and return the current view controller;
  */

@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setOnlyAllowEdgeDrag:NO];
+    
     UIView *tableBgView = [[UIView alloc] initWithFrame:self.view.bounds];
     [tableBgView setBackgroundColor:[UIColor colorWithRed:0.170 green:0.166 blue:0.175 alpha:1.000]];
     [self.menuTableView setBackgroundView:tableBgView];
