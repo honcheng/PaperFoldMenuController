@@ -40,7 +40,7 @@
 @property (nonatomic, weak) ShadowView *menuTableViewSideShadowView;
 @property (nonatomic, assign) float menuWidth;
 @property (nonatomic, assign) int numberOfFolds;
-@property (nonatomic, strong) NSBlockOperation *viewDidLoadBlockOperation;
+@property (nonatomic, strong) NSMutableArray *viewDidLoadBlocks;
 /**
  * This method reloads the menu on the left
  * and refresh the screenshot of the menu used in 
@@ -51,11 +51,11 @@
 
 @implementation PaperFoldMenuController
 
-- (NSBlockOperation *)viewDidLoadBlockOperation {
-    if (_viewDidLoadBlockOperation == nil) {
-        self.viewDidLoadBlockOperation = [[NSBlockOperation alloc] init];
+- (NSMutableArray *)viewDidLoadBlocks {
+    if (_viewDidLoadBlocks == nil) {
+        self.viewDidLoadBlocks = [[NSMutableArray alloc] init];
     }
-    return _viewDidLoadBlockOperation;
+    return _viewDidLoadBlocks;
 }
 
 + (BOOL)automaticallyNotifiesObserversOfSelectedViewController
@@ -102,17 +102,13 @@
     if (!self.isViewLoaded)
     {
         __weak typeof(self) theWeakSelf = self;
-        [self.viewDidLoadBlockOperation addExecutionBlock:^{
+        [self.viewDidLoadBlocks addObject:[^{
             __strong typeof(self) theStrongSelf = theWeakSelf;
             if (theStrongSelf == nil) {
                 return;
             }
-            // This is ran on a seperate thread, which is NSBlockOperation addExecutionBlock: behavior.
-            // It shouldn't cause any issue though but noted here just in case anyone face any issue.
-            // This also means observing selectedIndex or selectedViewController are not gaurentee to be
-            // running on main thread.
             theStrongSelf.selectedIndex = theSelectedIndex;
-        }];
+        } copy]];
     }
     else
     {
@@ -222,8 +218,10 @@
     [self.paperFoldView.leftFoldView addSubview:menuTableViewSideShadowView];
     self.menuTableViewSideShadowView = menuTableViewSideShadowView;
     
-    [self.viewDidLoadBlockOperation start];
-    self.viewDidLoadBlockOperation = nil;
+    for (void (^theBlock)(void) in self.viewDidLoadBlocks) {
+        theBlock();
+    }
+    self.viewDidLoadBlocks = nil;
 }
 
 - (void)setViewControllers:(NSMutableArray *)viewControllers
