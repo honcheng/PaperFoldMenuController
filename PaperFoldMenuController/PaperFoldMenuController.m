@@ -37,7 +37,6 @@
 /**
  * A UIView with shadow at joint between the menu and content view
  */
-@property (nonatomic, weak) ShadowView *menuTableViewSideShadowView;
 @property (nonatomic, assign) float menuWidth;
 @property (nonatomic, assign) int numberOfFolds;
 @property (nonatomic, strong) NSMutableArray *viewDidLoadBlocks;

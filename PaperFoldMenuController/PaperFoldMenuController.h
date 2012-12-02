@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, weak) UITableView *menuTableView;
 @property (nonatomic, weak) UIView *contentView;
+@property (nonatomic, weak) ShadowView *menuTableViewSideShadowView;
 @property (nonatomic, weak) id<PaperFoldMenuControllerDelegate> delegate;
 @property (nonatomic, assign) BOOL onlyAllowEdgeDrag;
 /**
