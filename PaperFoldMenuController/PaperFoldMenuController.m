@@ -101,9 +101,9 @@
 {
     if (!self.isViewLoaded)
     {
-        __weak typeof(self) theWeakSelf = self;
+        __weak __typeof(*&self) theWeakSelf = self;
         [self.viewDidLoadBlocks addObject:[^{
-            __strong typeof(self) theStrongSelf = theWeakSelf;
+            __strong __typeof(*&self) theStrongSelf = theWeakSelf;
             if (theStrongSelf == nil) {
                 return;
             }
@@ -209,8 +209,8 @@
     menuTableView.scrollsToTop = !(self.paperFoldView.state == PaperFoldStateDefault);
     self.menuTableView = menuTableView;
     
-    ShadowView *menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-3,0,3,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontalLeftToRight];
-    [menuTableViewSideShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.6]]];
+    ShadowView *menuTableViewSideShadowView = [[ShadowView alloc] initWithFrame:CGRectMake(_menuTableView.frame.size.width-2,0,2,[self.view bounds].size.height) foldDirection:FoldDirectionHorizontalLeftToRight];
+    [menuTableViewSideShadowView setColorArrays:@[[UIColor clearColor],[UIColor colorWithWhite:0 alpha:0.2]]];
     /**
      * added to the leftFoldView instead of leftFoldView.contentView bec
      * so that the shadow does not appear while folding
